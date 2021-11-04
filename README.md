@@ -76,6 +76,8 @@ This repository has 2 versions, namely:
 
 ![A house plotted in Essen](https://github.com/Arfameher/3D_houses/blob/main/3D_house_images/Essen_House_no_31.gif)
 
+(https://github.com/Arfameher/3D_houses/blob/main/3D_house_images/newplot.png)
+
 ***
 ### References
 The results we're interested in are DSM (Digital Surface Map) and DTM (Digital Terrain Map).
