@@ -66,7 +66,7 @@ This repository has 2 versions, namely:
     jupyter notebook
     ```
   OR
-cd to the directory where code is present and run the command from the terminal 
+- cd to the directory where code is present and run the command from the terminal 
     ```javascript
     python main.py
     ```
