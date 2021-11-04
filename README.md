@@ -76,7 +76,7 @@ This repository has 2 versions, namely:
 
 ![A house plotted in Essen](https://github.com/Arfameher/3D_houses/blob/main/3D_house_images/Essen_House_no_31.gif)
 
-(https://github.com/Arfameher/3D_houses/blob/main/3D_house_images/newplot.png)
+![Antwerpen Central Station](https://github.com/Arfameher/3D_houses/blob/main/3D_house_images/newplot.png)
 
 ***
 ### References
