@@ -40,22 +40,24 @@ To install all these libraries do the folling steps:
 
 This repository has 2 versions, namely:
 #### Jupyter Notebook version (.ipynb)
-    - If you want to use the notebook version to run the code, all you need is the `3D_visualization.ipynb` and to download the required DSM and DTM tiff file from the references.
 
-    - Then run the code, you need to input the address and run all the cells to get a 3D representation of the given address.
+- If you want to use the notebook version to run the code, all you need is the `3D_visualization.ipynb` and to download the required DSM and DTM tiff file from the references.
+
+- Then run the code, you need to input the address and run all the cells to get a 3D representation of the given address.
 
 #### Python File version (.py)
 
-    - If you want to use the python file version to run the code, you need the `main.py`, and the required DSM and DTM tiff file.
-    - For the code to run, you need to run the command `python main.py` from the terminal and enter the address that you want to get a 3D representation of the address.
+- If you want to use the python file version to run the code, you need the `main.py`, and the required DSM and DTM tiff file.     
+- For the code to run, you need to run the command `python main.py` from the terminal and enter the address that you want to get a 3D representation of the address.
+   
+#### bounds.csv
 
-3D_houses
-|
-│README.md      : Explains the project
-│main.py        : This is a python file for more robust output
-| 
-│3D_visualization.ipynb :   
-│
+- File contains all the bounds of all tiff files for the flanders region.
+- If you run `create_csv.py` the output will be stored in a `.csv` file
+
+#### requirements.txt 
+
+- Gives all the required libraries to run thiss code.
 
 ***
 ### Usage
@@ -71,10 +73,8 @@ cd to the directory where code is present and run the command from the terminal
 
 ***
 ### Visuals
-- File containing the boundsof all tiff files.
-<p align="center">
-  <img src=""width="208" height="250" />
-</p>
+
+![A house plotted in Essen](https://github.com/Arfameher/3D_houses/blob/main/3D_house_images/Essen_House_no_31.gif)
 
 ***
 ### References
