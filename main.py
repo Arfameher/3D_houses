@@ -101,13 +101,17 @@ def plot3d(rchm):
     ax = fig.add_subplot(111, projection='3d')
     chm3d = ax.plot_surface(x1, y1, rchm, linewidth=0.1,rstride=1, cstride=1,cmap='viridis', edgecolor='none')
 
-    def rotate(angle):
+    """def rotate(angle):
         ax.view_init(azim=angle) 
         plt.draw()
         plt.pause(.001)
         
     rot_animation = animation.FuncAnimation(fig, rotate, frames=np.arange(0,362,2),interval=100)
-    rot_animation.save(f"{address}.gif")
+    rot_animation.save(f"{address}.gif")"""
+    
+    end = time.time()
+    time1 = end - start
+    print(f"Time taken to run : {time1}Seconds")
     plt.show()
     plt.close()
 
@@ -135,5 +139,5 @@ def main():
 
 main()
 # To print the total time taken.
-end = time.time()
-print(end - start)
+#end = time.time()
+#print(end - start)
