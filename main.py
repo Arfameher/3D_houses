@@ -9,6 +9,7 @@ import pandas as pd
 from matplotlib import pyplot as plt    # Plotting the CHM model and to get the final 3D house representation.
 from matplotlib import cm
 from mpl_toolkits.mplot3d import axes3d
+import plotly.graph_objects as go
 from matplotlib import animation
 from shapely import geometry            # To get the polygon of the address
 
@@ -75,9 +76,11 @@ def CHM(polygon, result, resultDTM):
     clipped = [ {'type': 'Polygon','coordinates': polygon[0]}] # Defining the coordinates of the polygon.
 
     dsm = rioxarray.open_rasterio(result, masked =True).rio.clip(clipped, from_disk=True)
-
+    global dsm_arr
+    dsm_arr = dsm.values
     dtm = rioxarray.open_rasterio(resultDTM,masked=True).rio.clip(clipped, from_disk=True)
-
+    global dtm_arr
+    dtm_arr = dtm.values
     clipped_chm = dsm - dtm # To get the chm of the house.
 
     chm = clipped_chm[0]
@@ -90,6 +93,37 @@ def CHM(polygon, result, resultDTM):
 
     return rchm
 
+def plot3d_plotly(dsm_arr, dtm_arr):
+    dsm_arr = dsm_arr.squeeze()
+    dtm_arr = dtm_arr.squeeze()
+    np.where_are_NaNs = np.isnan(dsm_arr)
+    dsm_arr[np.where_are_NaNs] = 0
+        
+    np.where_are_NaNs = np.isnan(dtm_arr)
+    dtm_arr[np.where_are_NaNs] = 0
+        
+    dsm_arr = np.pad(dsm_arr,[(1, ), (1, )], mode='constant')
+    dtm_arr = np.pad(dtm_arr,[(1, ), (1, )], mode='constant')
+
+    chm= dsm_arr + dtm_arr
+    N = chm.shape[0]
+    M = chm.shape[1] 
+        
+    clipped = pd.DataFrame(chm)
+    fig = go.Figure(data=[go.Surface(z=clipped)])
+    fig.update_traces(contours_z=dict(show=True, usecolormap=True,
+                                        highlightcolor="limegreen", project_z=True))
+    fig.update_layout(title=address, autosize=True)
+
+    fig.update_layout(scene = dict(
+                        xaxis_title='Breath of building(sq.m)',
+                        yaxis_title='Length of building(sq.m)',
+                        zaxis_title='Height of building(sq.m)'),
+                        width=700,
+                        margin=dict(r=20, b=10, l=10, t=10))
+
+    fig.show()
+
 def plot3d(rchm):
 
     ny = rchm.shape[0]
@@ -99,15 +133,15 @@ def plot3d(rchm):
     x1, y1 = np.meshgrid(x, y)
     fig = plt.figure(figsize = (7,7))
     ax = fig.add_subplot(111, projection='3d')
-    chm3d = ax.plot_surface(x1, y1, rchm, linewidth=0.1,rstride=1, cstride=1,cmap='viridis', edgecolor='none')
+    chm3d = ax.plot_surface(x1, y1, rchm, linewidth=0.1,rstride=1, cstride=1,cmap=cm.summer, edgecolor='none')
 
-    """def rotate(angle):
+    def rotate(angle):
         ax.view_init(azim=angle) 
         plt.draw()
         plt.pause(.001)
         
     rot_animation = animation.FuncAnimation(fig, rotate, frames=np.arange(0,362,2),interval=100)
-    rot_animation.save(f"{address}.gif")"""
+    #rot_animation.save(f"{address}.gif")
     
     end = time.time()
     time1 = end - start
@@ -133,11 +167,9 @@ def main():
     plot_polygon(polygon)
 
     rchm = CHM(polygon, result, resultDTM)
+    # To plot using plotly
+    plot3d_plotly(dsm_arr,dtm_arr)
     # To plot 3D model of house.
     plot3d(rchm)
 
-
 main()
-# To print the total time taken.
-#end = time.time()
-#print(end - start)
